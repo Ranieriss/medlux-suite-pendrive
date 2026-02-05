@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+  <title>Medlux Reflective Control</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./assets/medlux_logo.png" />
+  <link rel="stylesheet" href="./css/styles.css?v=132" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <img class="brand-logo" src="./assets/medlux_logo.png" alt="MEDLUX" />
+      <div>
+        <div class="brand-title">Medlux Reflective Control</div>
+        <div class="brand-subtitle">Offline-first • Relatórios • Geolocalização</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn ghost" id="btnInstall" hidden>Instalar</button>
+      <button class="btn ghost" id="btnSyncStatus" title="Status offline">Offline</button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="card" id="homeView">
+      <h1>Menu</h1>
+      <p class="muted">Escolha o tipo de medição. O app aplica a norma automaticamente.</p>
+
+      <div class="grid">
+        <button class="tile" data-nav="horizontal">
+          <div class="tile-title">Retrorrefletância Horizontal</div>
+          <div class="tile-sub">15 m • 30 m • Chuva contínua</div>
+        </button>
+        <button class="tile" data-nav="vertical">
+          <div class="tile-title">Retrorrefletância Vertical (Películas)</div>
+          <div class="tile-sub">Ângulo único • Multiângulo • 0°/90°</div>
+        </button>
+        <button class="tile" data-nav="tachas">
+          <div class="tile-title">Retrorrefletância de Tachas</div>
+          <div class="tile-sub">Corpo A/B/C • Lente I/II/III/IV</div>
+        </button>
+        <button class="tile" data-nav="reports">
+          <div class="tile-title">Relatórios / Histórico</div>
+          <div class="tile-sub">PDF • Gráficos • Mapa</div>
+        </button>
+        <button class="tile" data-nav="qa">
+          <div class="tile-title">QA / Validação (técnico)</div>
+          <div class="tile-sub">Checklist + relatório QA (PIN)</div>
+        </button>
+      </div>
+
+      <hr class="sep" />
+      <hr class="sep" />
+      <div class="grid">
+        <button class="tile" id="btnBackup">
+          <div class="tile-title">Backup</div>
+          <div class="tile-sub">Exportar dados (JSON)</div>
+        </button>
+        <button class="tile" id="btnRestore">
+          <div class="tile-title">Restaurar</div>
+          <div class="tile-sub">Importar backup</div>
+        </button>
+        <button class="tile" id="btnAuditZip">
+          <div class="tile-title">Auditoria (ZIP)</div>
+          <div class="tile-sub">Relatório + PDFs + Integridade</div>
+        </button>
+        <button class="tile" id="btnImportBase">
+          <div class="tile-title">Base Técnica</div>
+          <div class="tile-sub">Importar do MEDLUX Control (equipamentos + certificados)</div>
+        </button>
+      </div>
+      <input type="file" id="restoreFile" accept="application/json" hidden />
+      <input type="file" id="baseFile" accept="application/json" hidden />
+
+    </section>
+
+    <!-- Horizontal -->
+    <section class="card" id="horizontalView" hidden>
+      <div class="view-head">
+        <button class="btn ghost" data-back>← Voltar</button>
+        <h2>Horizontal (NBR 14723)</h2>
+      </div>
+      <div class="wizard" id="horizontalWizard"></div>
+    </section>
+
+    <!-- Vertical -->
+    <section class="card" id="verticalView" hidden>
+      <div class="view-head">
+        <button class="btn ghost" data-back>← Voltar</button>
+        <h2>Vertical / Películas (NBR 14644)</h2>
+      </div>
+      <div class="wizard" id="verticalWizard"></div>
+    </section>
+
+    <!-- Tachas -->
+    <section class="card" id="tachasView" hidden>
+      <div class="view-head">
+        <button class="btn ghost" data-back>← Voltar</button>
+        <h2>Tachas (NBR 14636)</h2>
+      </div>
+      <div class="wizard" id="tachasWizard"></div>
+    </section>
+
+    <!-- Reports -->
+    <section class="card" id="reportsView" hidden>
+      <div class="view-head">
+        <button class="btn ghost" data-back>← Voltar</button>
+        <h2>Relatórios / Histórico</h2>
+      </div>
+      <div id="reportsList"></div>
+      <div id="reportViewer" hidden></div>
+    </section>
+
+    <!-- QA -->
+    <section class="card" id="qaView" hidden>
+      <div class="view-head">
+        <button class="btn ghost" data-back>← Voltar</button>
+        <h2>QA / Validação</h2>
+      </div>
+      <div id="qaRoot"></div>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="Navegação">
+    <button class="bn-item" data-nav="home" id="bnHome" aria-label="Menu">
+      <span class="bn-ic">🏠</span><span class="bn-tx">Menu</span>
+    </button>
+    <button class="bn-item" data-nav="horizontal" aria-label="Horizontal">
+      <span class="bn-ic">🛣️</span><span class="bn-tx">Horizontal</span>
+    </button>
+    <button class="bn-item" data-nav="vertical" aria-label="Películas">
+      <span class="bn-ic">🪧</span><span class="bn-tx">Películas</span>
+    </button>
+    <button class="bn-item" data-nav="tachas" aria-label="Tachas">
+      <span class="bn-ic">🔶</span><span class="bn-tx">Tachas</span>
+    </button>
+    <button class="bn-item" data-nav="criteria" aria-label="Critérios">
+      <span class="bn-ic">✅</span><span class="bn-tx">Critérios</span>
+    </button>
+    <button class="bn-item" data-nav="reports" aria-label="Histórico">
+      <span class="bn-ic">📄</span><span class="bn-tx">Histórico</span>
+    </button>
+  </nav>
+
+
+  <!-- Map Modal -->
+  <dialog id="mapDialog" class="dialog">
+    <div class="dialog-head">
+      <div>
+        <div class="dialog-title">Mapa da medição</div>
+        <div class="muted" id="mapCoords">—</div>
+      </div>
+      <button class="btn ghost" id="btnCloseMap">Fechar</button>
+    </div>
+    <div class="dialog-body">
+      <div id="mapEmbedWrap" class="map-embed"></div>
+      <div class="muted small">Se estiver offline, o mapa pode não carregar. As coordenadas ficam registradas no relatório.</div>
+    </div>
+  </dialog>
+
+  <!-- Offline QR generator (used in relatorios/PDF) -->
+  <script src="./assets/qrcode-generator.js?v=132"></script>
+  <script src="./js/db.js?v=132"></script>
+  <script src="./js/utils.js?v=132"></script>
+  <script src="./js/zipwriter.js?v=132"></script>
+  <script src="./js/norms.js?v=132"></script>
+  <script src="./js/wizards.js?v=132"></script>
+  <script src="./js/reports.js?v=132"></script>
+  <script src="./js/qa.js?v=132"></script>
+  <script src="./js/criteria.js?v=132"></script>
+  <script src="./js/app.js?v=132"></script>
+</body>
+</html>
+<section id="criteriaView" class="view" hidden>
+  <div class="card">
+    <div class="card-title">Critérios de aprovação</div>
+    <div class="muted">Cadastre os valores mínimos por norma, tipo e cor. Edição protegida por senha.</div>
+  </div>
+  <div id="criteriaRoot"></div>
+</section>
+
+
