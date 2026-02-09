@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medlux Reflective Control</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Medlux Reflective</p>
+      <h1>Medições por vínculo</h1>
+      <p class="muted" id="sessionInfo"></p>
+    </div>
+    <div class="header-actions">
+      <a class="btn ghost" href="../index.html">Home</a>
+      <a class="btn ghost" href="../medlux-control/index.html">Control</a>
+      <button class="btn ghost" id="btnLogout">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Nova medição</h2>
+      <form id="measurementForm" class="form-grid">
+        <label class="field">
+          <span>Equipamento</span>
+          <select name="equip_id" required></select>
+        </label>
+        <label class="field">
+          <span>Tipo de medição</span>
+          <select name="tipo_medicao" required>
+            <option value="Horizontal">Horizontal</option>
+            <option value="Vertical">Vertical</option>
+            <option value="Tachas">Tachas</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Local</span>
+          <input name="local" required />
+        </label>
+        <label class="field">
+          <span>Observação</span>
+          <input name="observacao" />
+        </label>
+        <label class="field">
+          <span>RL (opcional)</span>
+          <input name="rl" />
+        </label>
+        <div class="actions">
+          <button class="btn primary" type="submit">Salvar medição</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Últimas medições</h2>
+      <div id="measurementsList" class="list"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

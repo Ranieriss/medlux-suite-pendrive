@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medlux Suite • Login</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Medlux Suite</p>
+        <h1>Acesso offline-first</h1>
+        <p class="muted">Entre com seu ID e PIN para acessar os módulos de controle.</p>
+      </div>
+      <button class="btn ghost" id="btnLogout" hidden>Sair</button>
+    </header>
+
+    <section class="card">
+      <h2>Login</h2>
+      <form id="loginForm" autocomplete="off">
+        <label class="field">
+          <span>ID do usuário</span>
+          <input id="userId" name="userId" placeholder="RANIERI" required />
+        </label>
+        <label class="field">
+          <span>PIN (4 dígitos)</span>
+          <input id="userPin" name="userPin" inputmode="numeric" pattern="\d{4}" maxlength="4" required />
+        </label>
+        <button class="btn primary" type="submit">Entrar</button>
+      </form>
+      <p class="helper" id="loginStatus"></p>
+    </section>
+
+    <section class="card">
+      <h2>Módulos</h2>
+      <div class="grid">
+        <a class="tile" href="./medlux-control/index.html">
+          <strong>Medlux Control</strong>
+          <span>Gestão de equipamentos, usuários e vínculos.</span>
+        </a>
+        <a class="tile" href="./medlux-reflective-control/index.html">
+          <strong>Medlux Reflective Control</strong>
+          <span>Registro de medições por equipamento vinculado.</span>
+        </a>
+      </div>
+      <p class="muted">Acesso disponível somente após login.</p>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

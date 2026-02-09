@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Medlux Control</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Medlux Control</p>
+      <h1>Gestão de equipamentos e usuários</h1>
+      <p class="muted" id="sessionInfo"></p>
+    </div>
+    <div class="header-actions">
+      <a class="btn ghost" href="../index.html">Home</a>
+      <a class="btn ghost" href="../medlux-reflective-control/index.html">Reflective</a>
+      <button class="btn ghost" id="btnLogout">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Seções">
+      <button class="tab active" data-tab="equipamentos">Equipamentos</button>
+      <button class="tab" data-tab="usuarios">Usuários</button>
+      <button class="tab" data-tab="vinculos">Cautelas / Vínculos</button>
+    </nav>
+
+    <section class="card" id="tab-equipamentos">
+      <div class="card-head">
+        <h2>Equipamentos</h2>
+        <span class="muted">Gerencie cadastro e edições.</span>
+      </div>
+      <form id="equipmentForm" class="form-grid">
+        <label class="field">
+          <span>ID (identificação)</span>
+          <input name="id" required placeholder="RH01" />
+        </label>
+        <label class="field">
+          <span>Tipo</span>
+          <input name="tipo" placeholder="Horizontal" />
+        </label>
+        <label class="field">
+          <span>Modelo</span>
+          <input name="modelo" placeholder="MLX-100" />
+        </label>
+        <label class="field">
+          <span>Número de série</span>
+          <input name="numeroSerie" />
+        </label>
+        <label class="field">
+          <span>Fabricante</span>
+          <input name="fabricante" />
+        </label>
+        <label class="field">
+          <span>Responsável atual</span>
+          <input name="responsavelAtual" />
+        </label>
+        <label class="field">
+          <span>Última calibração</span>
+          <input name="dataUltimaCalibracao" type="date" />
+        </label>
+        <label class="field full">
+          <span>Observações</span>
+          <textarea name="observacoes" rows="3"></textarea>
+        </label>
+        <div class="actions">
+          <button class="btn primary" type="submit">Salvar</button>
+          <button class="btn ghost" type="button" id="btnCancelEdit" hidden>Cancelar edição</button>
+        </div>
+      </form>
+
+      <div class="divider"></div>
+      <div id="equipList" class="list"></div>
+    </section>
+
+    <section class="card" id="tab-usuarios" hidden>
+      <div class="card-head">
+        <h2>Usuários</h2>
+        <span class="muted">Somente admins podem editar ou resetar PIN.</span>
+      </div>
+      <form id="userForm" class="form-grid">
+        <label class="field">
+          <span>ID do usuário</span>
+          <input name="user_id" placeholder="PAULO" required />
+        </label>
+        <label class="field">
+          <span>Nome</span>
+          <input name="nome" required />
+        </label>
+        <label class="field">
+          <span>PIN (4 dígitos)</span>
+          <input name="pin" inputmode="numeric" pattern="\d{4}" maxlength="4" required />
+        </label>
+        <div class="actions">
+          <button class="btn primary" type="submit">Criar usuário</button>
+        </div>
+      </form>
+
+      <div class="divider"></div>
+      <div id="userList" class="list"></div>
+    </section>
+
+    <section class="card" id="tab-vinculos" hidden>
+      <div class="card-head">
+        <h2>Cautelas / Vínculos</h2>
+        <span class="muted">Controle de vínculos ativos.</span>
+      </div>
+      <form id="vinculoForm" class="form-grid">
+        <label class="field">
+          <span>Usuário (operador)</span>
+          <select name="user_id" required></select>
+        </label>
+        <label class="field">
+          <span>Equipamento</span>
+          <select name="equip_id" required></select>
+        </label>
+        <label class="field full">
+          <span>Observação</span>
+          <input name="observacao" />
+        </label>
+        <div class="actions">
+          <button class="btn primary" type="submit">Criar vínculo</button>
+        </div>
+      </form>
+
+      <div class="divider"></div>
+      <div id="vinculoList" class="list"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
